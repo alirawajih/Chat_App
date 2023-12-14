@@ -27,7 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       action = prefs.getString('email');
-      print(action);
+      // print(action);
     });
   }
 
