@@ -40,54 +40,59 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue[200],
-          title: Text.rich(
-            TextSpan(
-              text: 'Chat app   ',
-              children: <TextSpan>[
-                TextSpan(
-                    text: '$action',
-                    style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.blue)),
-              ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blue[200],
+            title: Text.rich(
+              TextSpan(
+                text: 'Chat app   ',
+                children: <TextSpan>[
+                  TextSpan(
+                      text: '$action',
+                      style: const TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.blue)),
+                ],
+              ),
+              style: const TextStyle(fontSize: 15),
             ),
-            style: const TextStyle(fontSize: 15),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              icon: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) {
-                  return RotationTransition(
-                    // turns: animation,
-                    turns: Tween(begin: 0.7, end: 1.0).animate(animation),
-                    child: child,
-                  );
+            actions: [
+              IconButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
                 },
-                child: const Icon(
-                  Icons.exit_to_app,
+                icon: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return RotationTransition(
+                      // turns: animation,
+                      turns: Tween(begin: 0.7, end: 1.0).animate(animation),
+                      child: child,
+                    );
+                  },
+                  child: const Icon(
+                    Icons.exit_to_app,
+                  ),
                 ),
+              )
+            ],
+            // leading: const Center(child: Timer()),
+          ),
+          body: Column(
+            children: [
+              const Expanded(child: ChatMessages()),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 236, 232, 232),
+                ),
+                child: const NewMessages(),
               ),
-            )
-          ],
-          // leading: const Center(child: Timer()),
-        ),
-        body: Column(
-          children: [
-            const Expanded(child: ChatMessages()),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 236, 232, 232),
-              ),
-              child: const NewMessages(),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }
